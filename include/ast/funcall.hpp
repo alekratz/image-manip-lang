@@ -13,11 +13,13 @@ class funcall
     : public expr
 {
 public:
-    funcall(args_list_p args)
-        : args(args) { }
+    funcall(cstref name, args_list_p args)
+        : name(name)
+        , args(args) { }
     virtual ~funcall() = default;
 
 public:
+    std::string name;
     args_list_p args;
 };
 
