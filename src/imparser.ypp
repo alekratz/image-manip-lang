@@ -54,6 +54,7 @@
     BANG        "!"
 
 %token <int64_t>        NUMBER "number"
+%token <int64_t>        COLOR "color"
 %token <std::string>    STRING "string"
 %token <std::string>    IDENTIFIER "identifier"
 
@@ -83,6 +84,7 @@ line    : funcall
 expr    : funcall_inner
         | STRING
         | NUMBER
+        | COLOR
         | qualified_id
         | range
         | dimension

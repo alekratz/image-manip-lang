@@ -17,6 +17,7 @@
 
 L           [a-zA-Z_]
 D           [0-9]
+H           {D}|[a-fA-F]
 
 identifier  {L}({L}|{D})*
 num         {D}+
@@ -53,10 +54,17 @@ x               return yy::imparser::make_DIM_SEP(loc);
 \"[^\"\n]*\"    return yy::imparser::make_STRING(yytext, loc);
 {identifier}    return yy::imparser::make_IDENTIFIER(yytext, loc);
 {num}           {
-    std::istringstream stream(yytext);
+    std::stringstream stream(yytext);
     int64_t result;
     stream >> result;
     return yy::imparser::make_NUMBER(result, loc);
+}
+@{H}+           {
+    std::stringstream stream;
+    stream << std::hex << yytext + 1;
+    int64_t result;
+    stream >> result;
+    return yy::imparser::make_COLOR(result, loc);
 }
 
 .               { driver.error(loc, "unexpected character", yytext); }
