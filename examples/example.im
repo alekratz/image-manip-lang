@@ -5,6 +5,8 @@
 load "image.png" img1
 # Push the image to the canvas
 push img1
+# Also valid is the 'loadpush'
+# loadpush "image.png"
 # Flush the canvas to image.jpg
 flush "image.jpg"
 ################################################################################
