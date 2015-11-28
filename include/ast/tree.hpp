@@ -1,6 +1,7 @@
 #ifndef AST_TREE_HPP
 #define AST_TREE_HPP
 
+#include "types.hpp"
 #include <memory>
 
 namespace ast {

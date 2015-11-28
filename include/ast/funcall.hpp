@@ -7,6 +7,9 @@
 
 namespace ast {
 
+class funcall;
+typedef std::shared_ptr<funcall> funcall_p;
+
 class funcall 
     : public tree
 {
@@ -18,8 +21,6 @@ public:
 public:
     args_list_p args;
 };
-
-typedef std::shared_ptr<funcall> funcall_p;
 
 } /* namespace ast */
 #endif

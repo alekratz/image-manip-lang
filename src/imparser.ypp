@@ -37,6 +37,7 @@
     #define yylex driver.lexer->lex
 }
 
+// Tokens
 %token
     END     0   "end of file"
     NEWLINE 10  "newline"
@@ -55,24 +56,27 @@
     DIM_SEP     "x"
     BANG        "!"
 
+// Token types
 %token <int64_t>        NUMBER "number"
 %token <int64_t>        COLOR "color"
 %token <std::string>    STRING "string"
 %token <std::string>    IDENTIFIER "identifier"
 
-%type <ast::tree_p>     script_unit
-%type <ast::funcall_p>  funcall
-%type <ast::funcall_p>  funcall_inner
-%type <ast::args_list_p> args_list
-%type <std::string>     qualified_id
-%type <std::string>     qualified_id_tail
+// Rule types
+%type <ast::tree_p>             script_unit
+%type <ast::funcall_p>          funcall
+%type <ast::funcall_p>          funcall_inner
+%type <ast::args_list_p>        args_list
+%type <ast::qualified_id_p>     qualified_id
+%type <ast::qualified_id_p>     qualified_id_tail
 
 %%
 
 %start script_unit;
 
 script_unit
-        : lines { $$ = nullptr; }
+        : lines 
+            { $$ = nullptr; }
         ;
 
 conditional
@@ -117,17 +121,20 @@ if_stmt :
         END_KEYW IF_KEYW
         ;
 
-funcall : IDENTIFIER args_list { $$ = nullptr; }
+funcall : IDENTIFIER args_list 
+            { $$ = nullptr; }
         ;
 
 funcall_inner
-        : IDENTIFIER LPAREN args_list RPAREN { $$ = nullptr; }
+        : IDENTIFIER LPAREN args_list RPAREN 
+            { $$ = nullptr; }
         ;
 
 args_list
         : expr args_list
-                    { /* TODO: $2.add_front($1); $$ = $2; */}
-        | %empty    { $$ = std::make_shared<ast::args_list>(); }
+            { /* TODO: $2.add_front($1); $$ = $2; */}
+        | %empty
+            { $$ = std::make_shared<ast::args_list>(); }
         ;
 
 dimension
@@ -135,22 +142,22 @@ dimension
         ;
 
 qualified_id
-        : IDENTIFIER qualified_id_tail { $$ = $1 + $2; }
+        : IDENTIFIER qualified_id_tail 
+            { $$ = std::make_shared<ast::qualified_id>($1, $2); }
         ;
 
 qualified_id_tail
-        : DOT IDENTIFIER qualified_id_tail {
-            std::stringstream ss;
-            ss << "." << $2;
-            $$ = ss.str() + $3;
-        }
+        : DOT IDENTIFIER qualified_id_tail 
+            { $$ = std::make_shared<ast::qualified_id>($2, $3); }
         | DOT NUMBER {
             std::stringstream ss;
-            ss << "." << $2;
-            $$ = ss.str();
+            ss << $2;
+            $$ = std::make_shared<ast::qualified_id>(ss.str(), nullptr);
         }
-        | DOT STAR { $$ = ".*"; } // TODO : more useful type annotation stuff
-        | %empty { $$ = ""; }
+        | DOT STAR 
+            { $$ = std::make_shared<ast::qualified_id>("*", nullptr); }
+        | %empty 
+            { $$ = nullptr; }
         ;
 
 range   : NUMBER DOUBLEDOT NUMBER
