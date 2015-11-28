@@ -11,7 +11,7 @@ class tree_list
 {
 public:
     tree_list() = default;
-    virtual ~tree_list() = default;
+    virtual ~tree_list() = 0;
 public:
     std::vector<tree_p> members;
     void push_back(const tree_p& ptr) 

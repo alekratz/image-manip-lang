@@ -21,7 +21,9 @@ set(CMAKE_CXX_FLAGS "-g -Wall --std=c++14")
 
 set(IM_SOURCES 
     src/imdriver.cpp
-    src/main.cpp 
+    src/main.cpp
+    src/ast/tree_list.cpp
+    src/ast/expr.cpp
     ${FLEX_imlexer_OUTPUTS} 
     ${BISON_imparser_OUTPUTS})
 

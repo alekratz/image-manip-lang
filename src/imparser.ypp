@@ -64,6 +64,7 @@
 
 // Rule types
 %type <ast::tree_p>             script_unit
+%type <ast::expr_p>             expr
 %type <ast::funcall_p>          funcall
 %type <ast::funcall_p>          funcall_inner
 %type <ast::args_list_p>        args_list
@@ -95,12 +96,19 @@ line    : funcall
         ;
 
 expr    : funcall_inner
+        { $$ = nullptr; }
         | STRING
+        { $$ = nullptr; }
         | NUMBER
+        { $$ = nullptr; }
         | COLOR
+        { $$ = nullptr; }
         | qualified_id
+        { $$ = nullptr; }
         | range
+        { $$ = nullptr; }
         | dimension
+        { $$ = nullptr; }
         ;
 
 // for IDENTIFIER in {range}

@@ -2,7 +2,7 @@
 #define AST_FUNCALL_HPP
 
 #include "args_list.hpp"
-#include "tree.hpp"
+#include "expr.hpp"
 #include <memory>
 
 namespace ast {
@@ -11,7 +11,7 @@ class funcall;
 typedef std::shared_ptr<funcall> funcall_p;
 
 class funcall 
-    : public tree
+    : public expr
 {
 public:
     funcall(args_list_p args)
