@@ -1,10 +1,13 @@
 %option c++ noyywrap nounput batch debug noinput
 
 %{
-#include <string>
 #include "imdriver.hpp"
 #include "imlexer.hpp"
 #include "parser.hpp"
+
+#include <sstream>
+#include <string>
+#include <cstdint>
 
 #define YY_USER_ACTION loc.columns(yyleng);
 
@@ -14,11 +17,11 @@
 
 L           [a-zA-Z_]
 D           [0-9]
-H           {D}|[a-fA-F]
 
 identifier  {L}({L}|{D})*
-comment     #.*$
-newline     \n+
+num         {D}+
+comment     #.*{newline}
+newline     \n
 ws          [\t ]
 
 %%
@@ -27,8 +30,12 @@ ws          [\t ]
     loc.step();
 %}
 
-{comment}       loc.step();
-{newline}       { loc.lines(yyleng); loc.step(); }
+{comment}       loc.lines(1);
+{newline}       {
+    loc.lines(yyleng);
+    loc.step();
+    return yy::imparser::make_NEWLINE(loc);
+}
 {ws}            loc.step();
 end             return yy::imparser::make_END_KEYW(loc);
 for             return yy::imparser::make_FOR_KEYW(loc);
@@ -38,9 +45,16 @@ if              return yy::imparser::make_IF_KEYW(loc);
 \*              return yy::imparser::make_STAR(loc);
 \(              return yy::imparser::make_LPAREN(loc);
 \)              return yy::imparser::make_RPAREN(loc);
+x               return yy::imparser::make_DIM_SEP(loc);
 
 \"[^\"\n]*\"    return yy::imparser::make_STRING(yytext, loc);
 {identifier}    return yy::imparser::make_IDENTIFIER(yytext, loc);
+{num}           {
+    std::istringstream stream(yytext);
+    int64_t result;
+    stream >> result;
+    return yy::imparser::make_NUMBER(result, loc);
+}
 
 .               { driver.error(loc, "unexpected character", yytext); }
 

@@ -2,7 +2,6 @@
 %require "3.0.4"
 %defines
 %locations
-// %expect 2
 
 %define parser_class_name {imparser}
 %define api.value.type variant
@@ -15,6 +14,7 @@
 %code requires
 {
     #include <string>
+    #include <cstdint>
     class imdriver;
 }
 
@@ -49,8 +49,10 @@
     STAR        "*"
     LPAREN      "("
     RPAREN      ")"
+    DIM_SEP     "x"
 
-%token <std::string>    STRING  "string"
+%token <int64_t>        NUMBER "number"
+%token <std::string>    STRING "string"
 %token <std::string>    IDENTIFIER "identifier"
 
 %%
@@ -72,16 +74,18 @@ lines   : line NEWLINE lines
         | %empty { }
         ;
 
-line    : funcall
-        | expr
-        | for_stmt
-        | if_stmt
+line    : funcall       { std::cout << driver.lexer->loc << "\tline -> funcall" << std::endl; }
+        | expr          { std::cout << driver.lexer->loc << "\tline -> expr" << std::endl; }
+        | for_stmt      { std::cout << driver.lexer->loc << "\tline -> for_stmt" << std::endl; }
+        | if_stmt       { std::cout << driver.lexer->loc << "\tline -> if_stmt" << std::endl; }
         ;
 
-expr    : funcall_inner
-        | STRING
-        | IDENTIFIER
-        | range
+expr    : funcall_inner             { std::cout << driver.lexer->loc << "\texpr -> funcall_inner" << std::endl; }
+        | STRING                    { std::cout << driver.lexer->loc << "\texpr -> STRING" << std::endl; }
+        | NUMBER                    { std::cout << driver.lexer->loc << "\texpr -> NUMBER" << std::endl; }
+        | IDENTIFIER list_access    { std::cout << driver.lexer->loc << "\texpr -> IDENTIFIER list_access" << std::endl; }
+        | range                     { std::cout << driver.lexer->loc << "\texpr -> range" << std::endl; }
+        | dimension                 { std::cout << driver.lexer->loc << "\texpr -> dimension" << std::endl; }
         ;
 
 // for IDENTIFIER in {range}
@@ -111,6 +115,15 @@ funcall_inner
 
 args_list
         : expr args_list
+        | %empty { }
+        ;
+
+dimension
+        : NUMBER DIM_SEP NUMBER
+        ;
+
+list_access
+        : DOT NUMBER
         | %empty { }
         ;
 
