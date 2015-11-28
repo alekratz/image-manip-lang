@@ -32,6 +32,7 @@
 {
     #include "imdriver.hpp"
     #include "imlexer.hpp"
+    #include <sstream>
     #undef yylex
     #define yylex driver.lexer->lex
 }
@@ -63,6 +64,8 @@
 %type <ast::funcall_p>  funcall
 %type <ast::funcall_p>  funcall_inner
 %type <ast::args_list_p> args_list
+%type <std::string>     qualified_id
+%type <std::string>     qualified_id_tail
 
 %%
 
@@ -132,14 +135,22 @@ dimension
         ;
 
 qualified_id
-        : IDENTIFIER qualified_id_tail
+        : IDENTIFIER qualified_id_tail { $$ = $1 + $2; }
         ;
 
 qualified_id_tail
-        : DOT NUMBER qualified_id_tail
-        | DOT IDENTIFIER qualified_id_tail
-        | DOT STAR
-        | %empty
+        : DOT IDENTIFIER qualified_id_tail {
+            std::stringstream ss;
+            ss << "." << $2;
+            $$ = ss.str() + $3;
+        }
+        | DOT NUMBER {
+            std::stringstream ss;
+            ss << "." << $2;
+            $$ = ss.str();
+        }
+        | DOT STAR { $$ = ".*"; } // TODO : more useful type annotation stuff
+        | %empty { $$ = ""; }
         ;
 
 range   : NUMBER DOUBLEDOT NUMBER
