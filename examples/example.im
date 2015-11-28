@@ -22,7 +22,7 @@ for img_arg in args.*
     # Load the argument into variable img
     load img_arg img
 
-    # Resize the image; sizes are a lexical construct
+    # Resize the image
     resize 120x120 img
 
     # Calling functions don't use commas
