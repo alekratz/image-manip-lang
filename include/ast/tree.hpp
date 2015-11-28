@@ -10,7 +10,7 @@ class tree
 {
 public:
     tree() = default;
-    virtual ~tree() = default;
+    virtual ~tree() = 0;
 
 };
 

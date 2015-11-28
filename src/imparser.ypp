@@ -98,11 +98,11 @@ line    : funcall
 expr    : funcall_inner
             { $$ = $1; }
         | STRING
-            { $$ = nullptr; }
+            { $$ = std::make_shared<ast::string_expr>($1); }
         | NUMBER
-            { $$ = nullptr; }
+            { $$ = std::make_shared<ast::number_expr>($1);; }
         | COLOR
-            { $$ = nullptr; }
+            { $$ = std::make_shared<ast::number_expr>($1);; }
         | qualified_id
             { $$ = nullptr; }
         | range
