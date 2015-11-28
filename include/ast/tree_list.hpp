@@ -14,7 +14,10 @@ public:
     virtual ~tree_list() = default;
 public:
     std::vector<tree_p> members;
-    void add(tree_p ptr) { members.push_back(ptr); }
+    void push_back(const tree_p& ptr) 
+        { members.push_back(ptr); }
+    void push_front(const tree_p& ptr) 
+        { members.insert(members.begin(), ptr); }
     auto begin() { return members.begin(); }
     auto end() { return members.end(); }
 };
