@@ -3,7 +3,6 @@
 
 #include "tree.hpp"
 #include "tree_list.hpp"
-#include <memory>
 
 namespace ast {
 

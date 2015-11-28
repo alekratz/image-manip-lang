@@ -2,7 +2,7 @@
 #define AST_QUALIFIED_ID_HPP
 
 #include "args_list.hpp"
-#include "tree.hpp"
+#include "expr.hpp"
 
 namespace ast {
 
@@ -10,7 +10,7 @@ class qualified_id;
 typedef std::shared_ptr<qualified_id> qualified_id_p;
 
 class qualified_id 
-    : public tree
+    : public expr
 {
 public:
     qualified_id(cstref value, qualified_id_p tail)

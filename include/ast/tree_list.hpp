@@ -3,7 +3,6 @@
 
 #include "tree.hpp"
 #include <vector>
-#include <memory>
 
 namespace ast {
 
