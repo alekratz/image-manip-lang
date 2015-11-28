@@ -40,3 +40,6 @@ for img_arg in args.*
     flush format("converted%03d.png" img_arg.which)
 end for
 ```
+
+# License
+Currently, I am holding all rights to the image-manip-lang until I get it more stable/concrete. There is a 100% chance that it will be under a permissive, open source license (I'm thinking BSD) - I just want to get the project more established before I start slapping licenses on it.
