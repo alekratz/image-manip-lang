@@ -6,6 +6,9 @@
 #include <string>
 #include <boost/filesystem.hpp>
 
+#define VCOUT if(verbose) cout
+#define VCERR if(verbose) cerr
+
 using namespace std;
 namespace fs = boost::filesystem;
 
@@ -86,18 +89,19 @@ int main(int argc, char **argv)
 
     for(auto& file : filenames)
     {
-        if(verbose)
-            cout << "processing file " << file << endl;
+        VCOUT << "processing file " << file << ": ";
         imdriver the_driver;
         the_driver.trace_scanning = trace_scanning;
         the_driver.trace_parsing = trace_parsing;
         if(!fs::exists(file) || fs::is_directory(file))
         {
+            VCOUT << endl;
             cerr << "error: `" << file << "' is not a regular file" << endl;
             cerr << "exiting" << endl;
             exit(1);
         }
-        the_driver.parse_file(file);
+        if(the_driver.parse_file(file))
+            VCOUT << "done" << endl;
     }
 
     return 0;
