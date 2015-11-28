@@ -1,0 +1,26 @@
+################################################################################
+# Convert a PNG to a JPG
+load "image.png" img1
+push img1
+write "image.jpg"
+################################################################################
+# Do the above in a more useful way
+set path arg.1
+if ! path is png
+    echo "Input path must be a png file!"
+    exit
+end if
+
+# Go through all arguments
+for img_arg in args.*
+    # Load the argument into variable img
+    load img_arg img
+    # Resize the image; sizes are a lexical construct
+    resize 120x120 img
+    # Save the image
+    # Calling functions don't use commas
+    # A depth of 1 or greater uses parentheses
+    write img format("image%03d.png" img_arg.which)
+end for
+
+################################################################################
