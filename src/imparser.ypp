@@ -13,6 +13,7 @@
 
 %code requires
 {
+    #include "ast.hpp"
     #include <string>
     #include <cstdint>
     class imdriver;
@@ -58,12 +59,17 @@
 %token <std::string>    STRING "string"
 %token <std::string>    IDENTIFIER "identifier"
 
+%type <ast::tree_p>     script_unit
+%type <ast::funcall_p>  funcall
+%type <ast::funcall_p>  funcall_inner
+%type <ast::args_list_p> args_list
+
 %%
 
 %start script_unit;
 
 script_unit
-        : lines
+        : lines { $$ = nullptr; }
         ;
 
 conditional
@@ -108,16 +114,17 @@ if_stmt :
         END_KEYW IF_KEYW
         ;
 
-funcall : IDENTIFIER args_list
+funcall : IDENTIFIER args_list { $$ = nullptr; }
         ;
 
 funcall_inner
-        : IDENTIFIER LPAREN args_list RPAREN
+        : IDENTIFIER LPAREN args_list RPAREN { $$ = nullptr; }
         ;
 
 args_list
         : expr args_list
-        | %empty { }
+                    { /* TODO: $2.add_front($1); $$ = $2; */}
+        | %empty    { $$ = std::make_shared<ast::args_list>(); }
         ;
 
 dimension
