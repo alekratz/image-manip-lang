@@ -23,7 +23,6 @@ public:
 
 public:
     yy::imparser::symbol_type lex(lisplike_driver& driver);
-    // Location of the current token
     yy::location loc;
 
 protected:

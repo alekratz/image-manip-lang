@@ -21,7 +21,7 @@ D           [0-9]
 identifier  {L}({L}|{D})*
 num         {D}+
 comment     #.*{newline}
-newline     \n
+newline     \n+
 ws          [\t ]
 
 %%
@@ -39,13 +39,16 @@ ws          [\t ]
 {ws}            loc.step();
 end             return yy::imparser::make_END_KEYW(loc);
 for             return yy::imparser::make_FOR_KEYW(loc);
+in              return yy::imparser::make_IN_KEYW(loc);
 if              return yy::imparser::make_IF_KEYW(loc);
 
 \.              return yy::imparser::make_DOT(loc);
+\.\.            return yy::imparser::make_DOUBLEDOT(loc);
 \*              return yy::imparser::make_STAR(loc);
 \(              return yy::imparser::make_LPAREN(loc);
 \)              return yy::imparser::make_RPAREN(loc);
 x               return yy::imparser::make_DIM_SEP(loc);
+!               return yy::imparser::make_BANG(loc);
 
 \"[^\"\n]*\"    return yy::imparser::make_STRING(yytext, loc);
 {identifier}    return yy::imparser::make_IDENTIFIER(yytext, loc);
