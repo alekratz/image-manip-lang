@@ -43,3 +43,5 @@ end for
 
 # License
 Currently, I am holding all rights to the image-manip-lang until I get it more stable/concrete. There is a 100% chance that it will be under a permissive, open source license (I'm thinking BSD) - I just want to get the project more established before I start slapping licenses on it.
+
+If you want to do something weird copy-wise (i.e. before I have a license for it), shoot me an email at alekratz@gmail.com, and we can work something out.
