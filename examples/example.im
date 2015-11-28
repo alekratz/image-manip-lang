@@ -6,7 +6,7 @@ write "image.jpg"
 ################################################################################
 # Do the above in a more useful way
 set path arg.1
-if ! path is png
+if ! is(path png)
     echo "Input path must be a png file!"
     exit
 end if
@@ -22,5 +22,4 @@ for img_arg in args.*
     # A depth of 1 or greater uses parentheses
     write img format("image%03d.png" img_arg.which)
 end for
-
 ################################################################################
