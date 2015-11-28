@@ -1,0 +1,25 @@
+#ifndef AST_TREE_LIST_HPP
+#define AST_TREE_LIST_HPP
+
+#include "tree.hpp"
+#include <vector>
+#include <memory>
+
+namespace ast {
+
+class tree_list
+{
+public:
+    tree_list() = default;
+    virtual ~tree_list() = default;
+public:
+    std::vector<tree_p> members;
+    void add(tree_p ptr) { members.push_back(ptr); }
+    auto begin() { return members.begin(); }
+    auto end() { return members.end(); }
+};
+
+typedef std::shared_ptr<tree_list> tree_list_p;
+
+} /* namespace ast */
+#endif
