@@ -39,17 +39,16 @@
     END     0   "end of file"
     NEWLINE 10  "newline"
     // Keywords
-    PUSH_KEYW   "push"
-    LOAD_KEYW   "load"
     END_KEYW    "end"
     FOR_KEYW    "for"
     IF_KEYW     "if"
-    ARGS_KEYW   "args"
     IN_KEYW     "in"
-    WRITE_KEYW  "write"
-    //
+    ARGS_KEYW   "args"
+    // Symbols
     DOT         "."
     STAR        "*"
+    LPAREN      "("
+    RPAREN      ")"
 
 %token <std::string>    STRING  "string"
 %token <std::string>    IDENTIFIER "identifier"
@@ -62,34 +61,59 @@ script_unit
         : lines
         ;
 
-load_stmt
-        : LOAD_KEYW STRING IDENTIFIER
-        ;
-
-push_stmt
-        : PUSH_KEYW IDENTIFIER
-        ;
-
-for_stmt
-        : FOR_KEYW IDENTIFIER IN_KEYW range NEWLINE lines END_KEYW FOR_KEYW
-        ;
-
-write_stmt
-        : WRITE_KEYW STRING
-        ;
-
 range   : IDENTIFIER DOT STAR
         ;
 
-lines   : line lines
+conditional
+        : expr
+        ;
+
+lines   : line NEWLINE lines
         | %empty { }
         ;
 
-line    : load_stmt
-        | push_stmt
+line    : funcall
+        | expr
         | for_stmt
-        | write_stmt
+        | if_stmt
         ;
+
+expr    : funcall_inner
+        | STRING
+        | IDENTIFIER
+        | range
+        ;
+
+// for IDENTIFIER in {range}
+//     ...
+// end for
+for_stmt:
+        FOR_KEYW IDENTIFIER IN_KEYW range NEWLINE 
+            lines 
+        END_KEYW FOR_KEYW
+        ;
+
+// if {conditional}
+//     ...
+// end if
+if_stmt :
+        IF_KEYW conditional NEWLINE
+            lines
+        END_KEYW IF_KEYW
+        ;
+
+funcall : IDENTIFIER args_list
+        ;
+
+funcall_inner
+        : IDENTIFIER LPAREN args_list RPAREN
+        ;
+
+args_list
+        : expr args_list
+        | %empty { }
+        ;
+
 %%
 
 void yy::imparser::error(const location_type& l, const std::string& m)

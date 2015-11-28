@@ -30,14 +30,14 @@ ws          [\t ]
 {comment}       loc.step();
 {newline}       { loc.lines(yyleng); loc.step(); }
 {ws}            loc.step();
-push            return yy::imparser::make_PUSH_KEYW(loc);
-load            return yy::imparser::make_LOAD_KEYW(loc);
 end             return yy::imparser::make_END_KEYW(loc);
 for             return yy::imparser::make_FOR_KEYW(loc);
 if              return yy::imparser::make_IF_KEYW(loc);
-write           return yy::imparser::make_WRITE_KEYW(loc);
+
 \.              return yy::imparser::make_DOT(loc);
 \*              return yy::imparser::make_STAR(loc);
+\(              return yy::imparser::make_LPAREN(loc);
+\)              return yy::imparser::make_RPAREN(loc);
 
 \"[^\"\n]*\"    return yy::imparser::make_STRING(yytext, loc);
 {identifier}    return yy::imparser::make_IDENTIFIER(yytext, loc);
