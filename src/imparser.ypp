@@ -88,17 +88,16 @@
 %start lines;
 
 lines   : line lines_tail
-            {
-                $2->push_front($1);
-                $$ = $2;
-            }
-        | %empty
-            { $$ = std::make_shared<ast::line_list>(); }
+            { ($$ = $2)->push_front($1); }
         ;
 
 lines_tail
-        : NEWLINE lines
+        : NEWLINE line lines_tail
+            { ($$ = $3)->push_front($2); }
+        | NEWLINE lines_tail
             { $$ = $2; }
+        | %empty
+            { $$ = std::make_shared<ast::line_list>(); }
         ;
 
 line    : funcall
