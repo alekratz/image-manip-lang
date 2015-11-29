@@ -1,0 +1,20 @@
+# Convert paths on the command line from png -> 120x120 jpg
+set path arg.1
+if ! is(path png)
+    echo "Input path must be a png file!"
+    exit
+end if
+
+# Go through all arguments
+for img_arg in args.*
+    # Load the argument into variable img
+    load img_arg img
+
+    # Resize the image
+    resize 120x120 img
+
+    # Calling functions don't use commas
+    # A depth of 1 or greater uses parentheses
+    push img
+    flush format("converted%03d.png" img_arg.which)
+end for
