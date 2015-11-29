@@ -9,6 +9,7 @@ namespace ast {
 
 class exec;
 typedef std::shared_ptr<exec> exec_p;
+typedef std::vector<exec_p> exec_p_list;
 
 class exec
     : public tree
@@ -20,8 +21,6 @@ public:
 public:
     virtual void operator()() = 0;
 };
-
-typedef std::vector<exec_p> exec_p_list;
 
 } /* namespace ast */
 

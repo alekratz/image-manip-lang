@@ -7,6 +7,7 @@
 #include "ast/conditional.hpp"
 
 #include "ast/expr.hpp"
+#include "ast/for_stmt.hpp"
 #include "ast/string_expr.hpp"
 #include "ast/number_expr.hpp"
 #include "ast/dimension.hpp"
