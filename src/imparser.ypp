@@ -47,6 +47,7 @@
     END_KEYW    "end"
     FOR_KEYW    "for"
     IF_KEYW     "if"
+    ELSE_KEYW   "else"
     IN_KEYW     "in"
     ARGS_KEYW   "args"
     // Symbols
@@ -72,6 +73,8 @@
 %type <ast::conditional_p>      conditional
 %type <ast::expr_p>             expr
 %type <ast::for_stmt_p>         for_stmt
+%type <ast::if_stmt_p>          if_stmt
+%type <ast::else_stmt_p>        else_stmt
 %type <ast::funcall_p>          funcall
 %type <ast::funcall_p>          funcall_inner
 %type <ast::args_list_p>        args_list
@@ -150,8 +153,17 @@ for_stmt:
 if_stmt :
         IF_KEYW conditional NEWLINE
             lines
+        else_stmt
         END_KEYW IF_KEYW
+            { $$ = std::make_shared<ast::if_stmt>($2, $4, $5); }
         ;
+
+else_stmt:
+        ELSE_KEYW NEWLINE
+            lines
+            { $$ = std::make_shared<ast::else_stmt>($3); }
+        | %empty
+            { $$ = nullptr; }
 
 funcall : IDENTIFIER args_list 
             { $$ = std::make_shared<ast::funcall>($1, $2); }
