@@ -106,7 +106,7 @@ line    : funcall
         | for_stmt
             { $$ = $1; }
         | if_stmt
-            { $$ = nullptr; }
+            { $$ = $1; }
         ;
 
 conditional
