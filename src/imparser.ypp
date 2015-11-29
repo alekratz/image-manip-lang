@@ -115,7 +115,7 @@ conditional
         | funcall_inner
             { $$ = std::make_shared<ast::funcall_conditional>($1); }
         | BANG conditional
-            { 
+            {
                 $2->inverse = !$2->inverse;
                 $$ = $2; 
             }
@@ -126,9 +126,9 @@ expr    : funcall_inner
         | STRING
             { $$ = std::make_shared<ast::string_expr>($1); }
         | NUMBER
-            { $$ = std::make_shared<ast::number_expr>($1);; }
+            { $$ = std::make_shared<ast::number_expr>($1); }
         | COLOR
-            { $$ = std::make_shared<ast::number_expr>($1);; }
+            { $$ = std::make_shared<ast::number_expr>($1); }
         | qualified_id
             { $$ = $1; }
         | range
