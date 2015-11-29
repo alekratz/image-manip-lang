@@ -41,6 +41,9 @@ for img_arg in args.*
 end for
 ```
 
+# Building
+This is a CMake project. Make a new directory, `cd` into it, and run `cmake ..`. You can then run `make` to build the project. 
+
 # License
 Currently, I am holding all rights to the image-manip-lang until I get it more stable/concrete. There is a 100% chance that it will be under a permissive, open source license (I'm thinking BSD) - I just want to get the project more established before I start slapping licenses on it.
 
