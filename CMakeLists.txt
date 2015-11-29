@@ -24,6 +24,7 @@ set(IM_SOURCES
     src/main.cpp
     src/ast/tree.cpp
     src/ast/tree_list.cpp
+    src/ast/conditional.cpp
     src/ast/exec.cpp
     src/ast/expr.cpp
     ${FLEX_imlexer_OUTPUTS} 

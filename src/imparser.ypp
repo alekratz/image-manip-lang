@@ -69,6 +69,7 @@
 //%type <std::vector<ast::exec_p>> lines
 //%type <std::vector<ast::exec_p>> lines_tail
 %type <ast::exec_p>             line
+%type <ast::conditional_p>      conditional
 %type <ast::expr_p>             expr
 %type <ast::funcall_p>          funcall
 %type <ast::funcall_p>          funcall_inner
@@ -101,8 +102,14 @@ line    : funcall
 
 conditional
         : expr COND_SYM expr
+            { $$ = std::make_shared<ast::lr_conditional>($1, $3); }
         | funcall_inner
+            { $$ = std::make_shared<ast::funcall_conditional>($1); }
         | BANG conditional
+            { 
+                $2->inverse = !$2->inverse;
+                $$ = $2; 
+            }
         ;
 
 expr    : funcall_inner
@@ -118,7 +125,7 @@ expr    : funcall_inner
         | range
             { $$ = $1; }
         | dimension
-            { $$ = nullptr; }
+            { $$ = $1; }
         ;
 
 // for IDENTIFIER in {range}

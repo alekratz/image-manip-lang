@@ -9,6 +9,10 @@ namespace ast {
 
 class conditional;
 typedef std::shared_ptr<conditional> conditional_p;
+class lr_conditional;
+typedef std::shared_ptr<lr_conditional> lr_conditional_p;
+class funcall_conditional;
+typedef std::shared_ptr<funcall_conditional> funcall_conditional_p;
 
 class conditional 
     : public tree
