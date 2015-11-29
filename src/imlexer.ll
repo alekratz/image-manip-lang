@@ -50,6 +50,12 @@ if              return yy::imparser::make_IF_KEYW(loc);
 \)              return yy::imparser::make_RPAREN(loc);
 x               return yy::imparser::make_DIM_SEP(loc);
 !               return yy::imparser::make_BANG(loc);
+!!              return yy::imparser::make_COND_SYM("!!", loc);
+\=\=            return yy::imparser::make_COND_SYM("==", loc);
+\<\=            return yy::imparser::make_COND_SYM("<=", loc);
+\>\=            return yy::imparser::make_COND_SYM(">=", loc);
+\<              return yy::imparser::make_COND_SYM("<", loc);
+\>              return yy::imparser::make_COND_SYM(">", loc);
 
 \"[^\"\n]*\"    return yy::imparser::make_STRING(yytext, loc);
 {identifier}    return yy::imparser::make_IDENTIFIER(yytext, loc);

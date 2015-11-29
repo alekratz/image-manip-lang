@@ -2,6 +2,9 @@
 #define AST_HPP
 
 #include "ast/tree.hpp"
+#include "ast/exec.hpp"
+
+#include "ast/conditional.hpp"
 
 #include "ast/expr.hpp"
 #include "ast/string_expr.hpp"

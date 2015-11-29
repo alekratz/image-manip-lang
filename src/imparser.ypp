@@ -15,6 +15,7 @@
 {
     #include "ast.hpp"
     #include <string>
+    #include <vector>
     #include <cstdint>
     class imdriver;
 }
@@ -30,6 +31,7 @@
 
 %code
 {
+    #include "ast.hpp"
     #include "imdriver.hpp"
     #include "imlexer.hpp"
     #include <sstream>
@@ -55,21 +57,18 @@
     RPAREN      ")"
     DIM_SEP     "x"
     BANG        "!"
-    DOUBLEEQUAL "=="
-    DOUBLEBANG  "!!"
-    LTEQ        "<="
-    GTEQ        ">="
-    GT          ">"
-    LT          "<"
 
 // Token types
+%token <std::string>    COND_SYM "conditional symbol (!! == <= >= < >)"
 %token <int64_t>        NUMBER "number"
 %token <int64_t>        COLOR "color"
 %token <std::string>    STRING "string"
 %token <std::string>    IDENTIFIER "identifier"
 
 // Rule types
-%type <ast::tree_p>             script_unit
+//%type <std::vector<ast::exec_p>> lines
+//%type <std::vector<ast::exec_p>> lines_tail
+%type <ast::exec_p>             line
 %type <ast::expr_p>             expr
 %type <ast::funcall_p>          funcall
 %type <ast::funcall_p>          funcall_inner
@@ -81,35 +80,29 @@
 
 %%
 
-%start script_unit;
-
-script_unit
-        : lines 
-            { $$ = nullptr; }
-        ;
+%start lines;
 
 conditional
-        : expr conditional_sym expr
+        : expr COND_SYM expr
+        | funcall_inner
         | BANG conditional
         ;
 
-conditional_sym
-        : DOUBLEEQUAL
-        | DOUBLEBANG
-        | LTEQ
-        | GTEQ
-        | GT
-        | LT
+lines   : line lines_tail
+            {  }
+        | %empty
         ;
 
-lines   : line NEWLINE lines
-        | %empty { }
+lines_tail
+        : NEWLINE lines
         ;
 
 line    : funcall
-        | expr
+            { $$ = $1; }
         | for_stmt
+            { $$ = nullptr; }
         | if_stmt
+            { $$ = nullptr; }
         ;
 
 expr    : funcall_inner
