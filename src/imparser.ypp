@@ -66,11 +66,12 @@
 %token <std::string>    IDENTIFIER "identifier"
 
 // Rule types
-//%type <std::vector<ast::exec_p>> lines
-//%type <std::vector<ast::exec_p>> lines_tail
+%type <ast::line_list_p>        lines
+%type <ast::line_list_p>        lines_tail
 %type <ast::exec_p>             line
 %type <ast::conditional_p>      conditional
 %type <ast::expr_p>             expr
+%type <ast::for_stmt_p>         for_stmt
 %type <ast::funcall_p>          funcall
 %type <ast::funcall_p>          funcall_inner
 %type <ast::args_list_p>        args_list
@@ -84,18 +85,23 @@
 %start lines;
 
 lines   : line lines_tail
-            {  }
+            {
+                $2->push_front($1);
+                $$ = $2;
+            }
         | %empty
+            { $$ = std::make_shared<ast::line_list>(); }
         ;
 
 lines_tail
         : NEWLINE lines
+            { $$ = $2; }
         ;
 
 line    : funcall
             { $$ = $1; }
         | for_stmt
-            { $$ = nullptr; }
+            { $$ = $1; }
         | if_stmt
             { $$ = nullptr; }
         ;
@@ -133,8 +139,9 @@ expr    : funcall_inner
 // end for
 for_stmt:
         FOR_KEYW IDENTIFIER IN_KEYW expr NEWLINE 
-            lines 
+            lines
         END_KEYW FOR_KEYW
+            { $$ = std::make_shared<ast::for_stmt>($2, $4, $6); }
         ;
 
 // if {conditional}

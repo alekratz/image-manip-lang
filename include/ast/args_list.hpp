@@ -3,12 +3,13 @@
 
 #include "tree.hpp"
 #include "tree_list.hpp"
+#include "expr.hpp"
 
 namespace ast {
 
 class args_list 
     : public tree
-    , public tree_list
+    , public tree_list<expr_p>
 {
 public:
     virtual ~args_list() = default;
