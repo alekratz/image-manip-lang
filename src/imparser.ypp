@@ -174,10 +174,8 @@ funcall_inner
         ;
 
 args_list
-        : expr args_list {
-            $2->push_front($1);
-            $$ = $2;
-        }
+        : expr args_list
+            { ($$ = $2)->push_front($1); }
         | %empty
             { $$ = std::make_shared<ast::args_list>(); }
         ;
@@ -195,11 +193,12 @@ qualified_id
 qualified_id_tail
         : DOT IDENTIFIER qualified_id_tail 
             { $$ = std::make_shared<ast::qualified_id>($2, $3); }
-        | DOT NUMBER {
-            std::stringstream ss;
-            ss << $2;
-            $$ = std::make_shared<ast::qualified_id>(ss.str(), nullptr);
-        }
+        | DOT NUMBER 
+            {
+                std::stringstream ss;
+                ss << $2;
+                $$ = std::make_shared<ast::qualified_id>(ss.str(), nullptr);
+            }
         | DOT STAR 
             { $$ = std::make_shared<ast::qualified_id>("*", nullptr); }
         | %empty 
