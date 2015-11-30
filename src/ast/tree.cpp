@@ -4,9 +4,7 @@
 namespace ast {
 tree::~tree() { }
 
-void tree::accept(visitor& guest)
-{ 
-    guest.visit(*this);
-}
+void tree::accept(visitor* guest)
+    { guest->visit(*this); }
 
 } /* namespace ast */
