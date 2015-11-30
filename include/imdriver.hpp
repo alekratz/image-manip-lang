@@ -3,6 +3,7 @@
 
 #include "parser.hpp"
 #include "imlexer.hpp"
+#include "ast.hpp"
 
 #include <string>
 
@@ -31,6 +32,7 @@ public:
     imlexer *lexer;
     bool trace_scanning;
     bool trace_parsing;
+    ast::line_list_p parsed_ast;
 };
 
 #endif

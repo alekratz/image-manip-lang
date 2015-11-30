@@ -85,7 +85,12 @@
 
 %%
 
-%start lines;
+%start script_unit;
+
+script_unit
+        : lines  { driver.parsed_ast = $1; }
+        | %empty { driver.parsed_ast = nullptr; }
+        ;
 
 lines   : line lines_tail
             { ($$ = $2)->push_front($1); }
