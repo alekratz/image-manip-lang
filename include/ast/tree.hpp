@@ -15,6 +15,7 @@ public:
     virtual ~tree() = 0;
 public:
     void accept(visitor* guest);
+    virtual void children_accept(visitor* guest) { }
 };
 
 typedef std::shared_ptr<tree> tree_p;
