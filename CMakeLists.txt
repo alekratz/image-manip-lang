@@ -24,8 +24,10 @@ set(IM_SOURCES
     src/main.cpp
     src/ast/tree.cpp
     src/ast/conditional.cpp
-    src/ast/exec.cpp
+    src/ast/line.cpp
     src/ast/expr.cpp
+    src/visitor.cpp
+    src/visitor_adaptor.cpp
     ${FLEX_imlexer_OUTPUTS} 
     ${BISON_imparser_OUTPUTS})
 

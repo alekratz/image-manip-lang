@@ -2,13 +2,15 @@
 #define AST_TREE_LIST_HPP
 
 #include "tree.hpp"
-#include "exec.hpp"
+#include "line.hpp"
+#include "expr.hpp"
 #include <vector>
 
 namespace ast {
 
 template<typename contained_t>
 class tree_list
+    : public tree
 {
 public:
     tree_list() = default;
@@ -27,10 +29,21 @@ public:
         members.reserve(members.size() + them.size());
         members.insert(members.cend(). them.cbegin(), them.cend());
     }
+
+public:
+    virtual void children_accept(visitor* guest)
+    {
+        accept(guest);
+        for(auto& ptr : members)
+            if(ptr != nullptr) ptr->accept(guest);
+    }
 };
 
-typedef tree_list<exec_p> line_list;
+typedef tree_list<line_p> line_list;
 typedef std::shared_ptr<line_list> line_list_p;
+
+typedef tree_list<expr_p> args_list;
+typedef std::shared_ptr<args_list> args_list_p;
 
 } /* namespace ast */
 #endif

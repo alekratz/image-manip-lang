@@ -1,7 +1,6 @@
 #ifndef AST_QUALIFIED_ID_HPP
 #define AST_QUALIFIED_ID_HPP
 
-#include "args_list.hpp"
 #include "expr.hpp"
 
 namespace ast {
@@ -17,6 +16,14 @@ public:
         : value(value)
         , tail(tail) { }
     virtual ~qualified_id() = default;
+
+public:
+    virtual void children_accept(visitor* guest)
+    {
+        accept(guest);
+        if(tail != nullptr)
+            tail->children_accept(guest);
+    }
 
 public:
     std::string value;

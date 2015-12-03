@@ -1,21 +1,18 @@
 #ifndef AST_TREE_HPP
 #define AST_TREE_HPP
 
+#include "visitor_adaptor.hpp"
 #include "types.hpp"
 #include <memory>
-
-class visitor;
 
 namespace ast {
 
 class tree
+    : public visitor_adaptor
 {
 public:
     tree() = default;
     virtual ~tree() = 0;
-public:
-    void accept(visitor* guest);
-    virtual void children_accept(visitor* guest) { }
 };
 
 typedef std::shared_ptr<tree> tree_p;

@@ -15,7 +15,7 @@ class funcall_conditional;
 typedef std::shared_ptr<funcall_conditional> funcall_conditional_p;
 
 class conditional 
-    : public tree
+    : public virtual tree
 {
 public:
     conditional()

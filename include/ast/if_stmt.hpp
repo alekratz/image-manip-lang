@@ -1,7 +1,7 @@
 #ifndef AST_IF_STMT_HPP
 #define AST_IF_STMT_HPP
 
-#include "exec.hpp"
+#include "line.hpp"
 #include "expr.hpp"
 
 namespace ast {
@@ -12,12 +12,19 @@ class else_stmt;
 typedef std::shared_ptr<else_stmt> else_stmt_p;
 
 class else_stmt
-    : public exec
+    : public line
 {
 public:
     else_stmt(line_list_p lines)
         : lines(lines) { }
     virtual ~else_stmt() = default;
+
+public:
+    virtual void children_accept(visitor* guest)
+    {
+        accept(guest);
+        if(lines != nullptr) lines->children_accept(guest);
+    }
 
 public:
     line_list_p lines;
@@ -29,7 +36,7 @@ public:
 };
 
 class if_stmt 
-    : public exec
+    : public line
 {
 public:
     if_stmt(conditional_p conditional, line_list_p lines, else_stmt_p else_stmt)
@@ -50,6 +57,14 @@ public:
             for(const auto& line : lines->members) (*line)();
         else if(else_stmt != nullptr)
             (*else_stmt)();
+    }
+
+    virtual void children_accept(visitor* guest)
+    {
+        accept(guest);
+        if(conditional != nullptr) conditional->children_accept(guest);
+        if(lines != nullptr) lines->children_accept(guest);
+        if(else_stmt != nullptr) else_stmt->children_accept(guest);
     }
 };
 

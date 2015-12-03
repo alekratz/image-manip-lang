@@ -8,9 +8,8 @@ namespace ast {
 class expr;
 typedef std::shared_ptr<expr> expr_p;
 
-/* This class is abstract */
 class expr 
-    : public tree
+    : public virtual tree
 {
 public:
     virtual ~expr() = 0;

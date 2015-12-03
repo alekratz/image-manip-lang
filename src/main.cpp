@@ -1,4 +1,5 @@
 #include "imdriver.hpp"
+#include "visitor.hpp"
 
 #include <getopt.h>
 #include <iostream>
@@ -101,7 +102,16 @@ int main(int argc, char **argv)
             exit(1);
         }
         if(the_driver.parse_file(file))
-            VCOUT << "done" << endl;
+        {
+            if(the_driver.parsed_ast != nullptr)
+            {
+                printout_visitor guest;
+                guest.traverse_top_down(the_driver.parsed_ast);
+                VCOUT << "done" << endl;
+            }
+            else
+                VCOUT << "file empty, skipping" << endl;
+        }
     }
 
     return 0;

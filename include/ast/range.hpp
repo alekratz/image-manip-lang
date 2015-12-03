@@ -20,6 +20,10 @@ public:
     virtual ~range() = default;
 
 public:
+    virtual void children_accept(visitor* guest)
+        { accept(guest); }
+
+public:
     const int64_t start;
     const int64_t end;
 };

@@ -2,7 +2,8 @@
 #define AST_HPP
 
 #include "ast/tree.hpp"
-#include "ast/exec.hpp"
+#include "ast/tree_list.hpp"
+#include "ast/line.hpp"
 
 #include "ast/conditional.hpp"
 
@@ -15,7 +16,6 @@
 #include "ast/range.hpp"
 
 #include "ast/funcall.hpp"
-#include "ast/args_list.hpp"
 #include "ast/qualified_id.hpp"
 
 #endif

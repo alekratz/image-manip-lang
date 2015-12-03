@@ -1,9 +1,9 @@
-#include "ast/exec.hpp"
+#include "ast/line.hpp"
 #include <sstream>
 #include <vector>
 
 using namespace std;
 
 namespace ast {
-exec::~exec() { }
+line::~line() { }
 }
