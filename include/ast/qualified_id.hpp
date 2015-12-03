@@ -18,11 +18,11 @@ public:
     virtual ~qualified_id() = default;
 
 public:
+    virtual void accept(visitor* guest);
     virtual void children_accept(visitor* guest)
     {
         accept(guest);
-        if(tail != nullptr)
-            tail->children_accept(guest);
+        if(tail != nullptr) tail->children_accept(guest);
     }
 
 public:

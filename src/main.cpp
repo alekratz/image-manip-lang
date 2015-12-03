@@ -106,7 +106,7 @@ int main(int argc, char **argv)
             if(the_driver.parsed_ast != nullptr)
             {
                 printout_visitor guest;
-                guest.traverse_top_down(the_driver.parsed_ast);
+                guest.traverse_top_down(the_driver.parsed_ast.get());
                 VCOUT << "done" << endl;
             }
             else

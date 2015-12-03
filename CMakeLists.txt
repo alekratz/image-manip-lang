@@ -22,12 +22,12 @@ set(CMAKE_CXX_FLAGS "-g -Wall --std=c++14")
 set(IM_SOURCES 
     src/imdriver.cpp
     src/main.cpp
+    src/ast/accept.cpp
     src/ast/tree.cpp
     src/ast/conditional.cpp
     src/ast/line.cpp
     src/ast/expr.cpp
     src/visitor.cpp
-    src/visitor_adaptor.cpp
     ${FLEX_imlexer_OUTPUTS} 
     ${BISON_imparser_OUTPUTS})
 

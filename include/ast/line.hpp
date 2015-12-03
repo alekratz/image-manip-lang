@@ -19,6 +19,7 @@ public:
     virtual ~line() = 0;
 
 public:
+    virtual void accept(visitor* guest) = 0;
     virtual void operator()() = 0;
 };
 

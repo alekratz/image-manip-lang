@@ -17,18 +17,25 @@ typedef std::shared_ptr<funcall_conditional> funcall_conditional_p;
 class conditional 
     : public virtual tree
 {
+    /* ctor/dtor */
 public:
     conditional()
         : inverse(false) { }
     virtual ~conditional() = 0;
 
+    /* operations */
 public:
-    bool inverse;
     bool compare() { return inverse ? !do_compare() : do_compare(); }
+    virtual void accept(visitor* guest) = 0;
 
 protected:
     virtual bool do_compare() = 0;
+    
+    /* members */
+public:
+    bool inverse;
 }; /* class conditional */
+
 
 class lr_conditional
     : public conditional
@@ -40,13 +47,18 @@ public:
         , right(right) {  }
     virtual ~lr_conditional() = default;
 
+    /* operations */
+public:
+    virtual void accept(visitor* guest);
 protected:
     virtual bool do_compare() { return false; }
 
+    /* members */
 public:
     const expr_p left;
     const expr_p right;
 }; /* class lr_conditional */
+
 
 class funcall_conditional
     : public conditional
@@ -57,9 +69,13 @@ public:
         , funcall(funcall) { }
     virtual ~funcall_conditional() = default;
 
+    /* operations */
+public:
+    virtual void accept(visitor* guest);
 protected:
     virtual bool do_compare() { return false; }
 
+    /* members */
 public:
     const funcall_p funcall;
 }; /* class funcall_conditional */

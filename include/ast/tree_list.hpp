@@ -31,19 +31,23 @@ public:
     }
 
 public:
+    virtual void accept(visitor* guest) { }
     virtual void children_accept(visitor* guest)
     {
         accept(guest);
-        for(auto& ptr : members)
-            if(ptr != nullptr) ptr->accept(guest);
+        for(auto& ptr : members) if(ptr != nullptr) ptr->accept(guest);
     }
 };
 
-typedef tree_list<line_p> line_list;
-typedef std::shared_ptr<line_list> line_list_p;
-
-typedef tree_list<expr_p> args_list;
+class args_list
+    : public tree_list<expr_p>
+{ virtual void accept(visitor* guest); };
 typedef std::shared_ptr<args_list> args_list_p;
+
+class line_list
+    : public tree_list<line_p>
+{ virtual void accept(visitor* guest); };
+typedef std::shared_ptr<line_list> line_list_p;
 
 } /* namespace ast */
 #endif

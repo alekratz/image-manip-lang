@@ -13,12 +13,18 @@ typedef std::shared_ptr<dimension> dimension_p;
 class dimension 
     : public expr
 {
+    /* ctor/dtor */
 public:
     dimension(int64_t first, int64_t second)
         : first(first)
         , second(second) { }
     virtual ~dimension() = default;
 
+    /* operations */
+public:
+    virtual void accept(visitor* guest);
+
+    /* members */
 public:
     const int64_t first;
     const int64_t second;

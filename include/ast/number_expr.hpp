@@ -19,10 +19,9 @@ public:
     virtual ~number_expr() = default;
 
 public:
+    virtual void accept(visitor* guest);
     virtual void children_accept(visitor* guest)
-    {
-        accept(guest);
-    }
+        { accept(guest); }
 
 public:
     const int64_t value;

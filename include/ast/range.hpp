@@ -20,6 +20,7 @@ public:
     virtual ~range() = default;
 
 public:
+    virtual void accept(visitor* guest);
     virtual void children_accept(visitor* guest)
         { accept(guest); }
 

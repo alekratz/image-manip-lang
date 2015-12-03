@@ -14,6 +14,7 @@ class funcall
     : public expr
     , public line
 {
+    /* ctor/dtor */
 public:
     funcall(cstref name, args_list_p args)
         : name(name)
@@ -21,17 +22,16 @@ public:
     virtual ~funcall() = default;
 
 public:
-    virtual void children_accept(visitor* guest)
-    {
-        accept(guest);
-        if(args != nullptr) args->accept(guest);
-    }
+    /* operations */
+public:
+    virtual void children_accept(visitor* guest) { }
+    virtual void accept(visitor* guest);
+    virtual void operator()() {}
 
+    /* members */
 public:
     std::string name;
     args_list_p args;
-
-    virtual void operator()() {}
 };
 
 } /* namespace ast */
