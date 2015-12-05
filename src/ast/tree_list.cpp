@@ -25,30 +25,5 @@ void line_list::children_accept(visitor* guest)
     accept(guest);
     base_t::children_accept(guest);
 }
-/*
-void args_list::traverse_top_down(visitor* guest)
-{
-    accept(guest);
-    base_t::traverse_top_down(guest);
-}
-
-void args_list::traverse_bottom_up(visitor* guest)
-{
-    base_t::traverse_bottom_up(guest);
-    accept(guest);
-}
-
-void line_list::traverse_top_down(visitor* guest)
-{
-    accept(guest);
-    base_t::traverse_top_down(guest);
-}
-
-void line_list::traverse_bottom_up(visitor* guest)
-{
-    base_t::traverse_bottom_up(guest);
-    accept(guest);
-} */
-
 
 } /* namespace ast */
