@@ -24,7 +24,7 @@ public:
 public:
     /* operations */
 public:
-    virtual void children_accept(visitor* guest) { }
+    virtual void children_accept(visitor* guest);
     virtual void accept(visitor* guest);
     virtual void operator()() {}
 

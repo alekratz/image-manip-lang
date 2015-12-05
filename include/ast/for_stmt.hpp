@@ -25,10 +25,7 @@ public:
 public:
     virtual void operator()()
         { }
-    virtual void children_accept(visitor* guest)
-    {
-        accept(guest);
-    }
+    virtual void children_accept(visitor* guest);
     virtual void accept(visitor* guest);
 
     /* members */

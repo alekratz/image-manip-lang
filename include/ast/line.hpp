@@ -9,7 +9,6 @@ namespace ast {
 
 class line;
 typedef std::shared_ptr<line> line_p;
-typedef std::vector<line_p> line_p_list;
 
 class line
     : public virtual tree

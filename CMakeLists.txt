@@ -20,13 +20,21 @@ include_directories("${CMAKE_CURRENT_BINARY_DIR}" "include")
 set(CMAKE_CXX_FLAGS "-g -Wall --std=c++14")
 
 set(IM_SOURCES 
+    src/ast/accept.cpp
+    src/ast/conditional.cpp
+    src/ast/else_stmt.cpp
+    src/ast/expr.cpp
+    src/ast/for_stmt.cpp
+    src/ast/funcall.cpp
+    src/ast/funcall_conditional.cpp
+    src/ast/if_stmt.cpp
+    src/ast/line.cpp
+    src/ast/lr_conditional.cpp
+    src/ast/qualified_id.cpp
+    src/ast/tree.cpp
+    src/ast/tree_list.cpp
     src/imdriver.cpp
     src/main.cpp
-    src/ast/accept.cpp
-    src/ast/tree.cpp
-    src/ast/conditional.cpp
-    src/ast/line.cpp
-    src/ast/expr.cpp
     src/visitor.cpp
     ${FLEX_imlexer_OUTPUTS} 
     ${BISON_imparser_OUTPUTS})
