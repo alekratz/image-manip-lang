@@ -62,8 +62,6 @@ private:
 public:
     virtual void accept(visitor* guest);
     virtual void children_accept(visitor* guest);
-    /*virtual void traverse_top_down(visitor* guest);
-    virtual void traverse_bottom_up(visitor* guest);*/
 };
 typedef std::shared_ptr<args_list> args_list_p;
 
@@ -75,8 +73,6 @@ private:
 public:
     virtual void accept(visitor* guest);
     virtual void children_accept(visitor* guest);
-    /*virtual void traverse_top_down(visitor* guest);
-    virtual void traverse_bottom_up(visitor* guest);*/
 };
 typedef std::shared_ptr<line_list> line_list_p;
 
