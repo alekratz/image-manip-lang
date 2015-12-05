@@ -23,6 +23,9 @@ public:
     /* operations */
 public:
     virtual void accept(visitor* guest);
+    virtual void children_accept(visitor* guest) { accept(guest); }
+    virtual void traverse_top_down(visitor* guest) { accept(guest); }
+    virtual void traverse_bottom_up(visitor* guest) { accept(guest); }
 
     /* members */
 public:

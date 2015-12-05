@@ -10,7 +10,8 @@ public:
     virtual ~visitor() = 0;
 
 public:
-    virtual void traverse_top_down(ast::tree* root) { root->children_accept(this); }
+    virtual void traverse_top_down(ast::tree* root) { root->traverse_top_down(this); }
+    virtual void traverse_bottom_up(ast::tree* root) { root->traverse_bottom_up(this); }
 
 public:
     virtual void visit(ast::line*) { }

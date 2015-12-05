@@ -23,6 +23,9 @@ public:
 public:
     bool compare() { return inverse ? !do_compare() : do_compare(); }
     virtual void accept(visitor* guest) = 0;
+    virtual void children_accept(visitor* guest) = 0;
+    virtual void traverse_top_down(visitor* guest) = 0;
+    virtual void traverse_bottom_up(visitor* guest) = 0;
 
 protected:
     virtual bool do_compare() = 0;

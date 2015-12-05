@@ -26,6 +26,9 @@ public:
 public:
     virtual void children_accept(visitor* guest);
     virtual void accept(visitor* guest);
+    virtual void traverse_top_down(visitor* guest);
+    virtual void traverse_bottom_up(visitor* guest);
+    
     virtual void operator()() {}
 
     /* members */
