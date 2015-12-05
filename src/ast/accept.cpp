@@ -5,7 +5,6 @@
 
 namespace ast {
 
-VISITOR_ACCEPT_DECL(line)
 VISITOR_ACCEPT_DECL(lr_conditional)
 VISITOR_ACCEPT_DECL(funcall_conditional)
 VISITOR_ACCEPT_DECL(for_stmt)

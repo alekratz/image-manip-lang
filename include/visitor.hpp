@@ -14,7 +14,6 @@ public:
     virtual void traverse_bottom_up(ast::tree* root) { root->traverse_bottom_up(this); }
 
 public:
-    virtual void visit(ast::line*) { }
     virtual void visit(ast::lr_conditional*) { }
     virtual void visit(ast::funcall_conditional*) { }
     virtual void visit(ast::for_stmt*) { }
@@ -37,7 +36,6 @@ public:
     virtual ~printout_visitor() = default;
 
 public:
-    virtual void visit(ast::line*) { std::cout << "line" << std::endl; }
     virtual void visit(ast::lr_conditional*) { std::cout << "lr_conditional" << std::endl; }
     virtual void visit(ast::funcall_conditional*) { std::cout << "funcall_conditional" << std::endl; }
     virtual void visit(ast::for_stmt*) { std::cout << "for_stmt" << std::endl; }
