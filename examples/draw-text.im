@@ -1,0 +1,11 @@
+size 320x85 canvas.none
+font ";"
+pointsize 72
+draw text 25 60 "Magick"
+channel RGBA
+blur 0x6
+fill darkred
+stroke magenta
+draw text 20 55 "Magick"
+
+write "fuzzy-magick.img"

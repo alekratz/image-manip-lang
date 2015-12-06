@@ -54,13 +54,13 @@ public:
     virtual void visit(ast::range* node)
         { std::cout << "range: " << node->start << ", " << node->end << std::endl; }
     virtual void visit(ast::funcall* node)
-        { std::cout << "funcall:" << node->args->size() << " args" << std::endl; }
+        { std::cout << "funcall: name: " << node->name << " " << node->args->size() << " args" << std::endl; }
     virtual void visit(ast::args_list* node)
         { std::cout << "args_list: " << node->members.size() << " args" << std::endl; }
     virtual void visit(ast::line_list* node)
         { std::cout << "line_list: " << node->members.size() << " lines" << std::endl; }
     virtual void visit(ast::qualified_id* node)
-        { std::cout << "qualified_id" << node->str() << std::endl; }
+        { std::cout << "qualified_id: " << node->str() << std::endl; }
 };
 
 #endif
