@@ -62,9 +62,7 @@ if              return yy::imparser::make_IF_KEYW(loc);
     std::stringstream stream(yytext);
     int64_t first, second;
     char throwaway;
-    stream >> first;
-    stream >> throwaway;
-    stream >> second;
+    stream >> first >> throwaway >> second;
     return yy::imparser::make_DIMENSION(
         std::make_shared<ast::dimension>(first, second), loc);
 }
@@ -76,8 +74,8 @@ if              return yy::imparser::make_IF_KEYW(loc);
 }
 @{H}+           {
     std::stringstream stream;
-    stream << std::hex << yytext + 1;
     int64_t result;
+    stream << std::hex << yytext + 1;
     stream >> result;
     return yy::imparser::make_COLOR(result, loc);
 }
