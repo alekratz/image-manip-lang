@@ -48,7 +48,6 @@ if              return yy::imparser::make_IF_KEYW(loc);
 \*              return yy::imparser::make_STAR(loc);
 \(              return yy::imparser::make_LPAREN(loc);
 \)              return yy::imparser::make_RPAREN(loc);
-x               return yy::imparser::make_DIM_SEP(loc);
 !               return yy::imparser::make_BANG(loc);
 !!              return yy::imparser::make_COND_SYM("!!", loc);
 \=\=            return yy::imparser::make_COND_SYM("==", loc);
@@ -59,6 +58,16 @@ x               return yy::imparser::make_DIM_SEP(loc);
 
 \"[^\"\n]*\"    return yy::imparser::make_STRING(yytext, loc);
 {identifier}    return yy::imparser::make_IDENTIFIER(yytext, loc);
+{num}x{num}     {
+    std::stringstream stream(yytext);
+    int64_t first, second;
+    char throwaway;
+    stream >> first;
+    stream >> throwaway;
+    stream >> second;
+    return yy::imparser::make_DIMENSION(
+        std::make_shared<ast::dimension>(first, second), loc);
+}
 {num}           {
     std::stringstream stream(yytext);
     int64_t result;

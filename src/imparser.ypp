@@ -56,7 +56,6 @@
     STAR        "*"
     LPAREN      "("
     RPAREN      ")"
-    DIM_SEP     "x"
     BANG        "!"
 
 // Token types
@@ -65,6 +64,7 @@
 %token <int64_t>        COLOR "color"
 %token <std::string>    STRING "string"
 %token <std::string>    IDENTIFIER "identifier"
+%token <ast::dimension_p> DIMENSION "dimension"
 
 // Rule types
 %type <ast::line_list_p>        lines
@@ -78,7 +78,6 @@
 %type <ast::funcall_p>          funcall
 %type <ast::funcall_p>          funcall_inner
 %type <ast::args_list_p>        args_list
-%type <ast::dimension_p>        dimension
 %type <ast::qualified_id_p>     qualified_id
 %type <ast::qualified_id_p>     qualified_id_tail
 %type <ast::range_p>            range
@@ -127,6 +126,8 @@ conditional
 
 expr    : funcall_inner
             { $$ = $1; }
+        | DIMENSION
+            { $$ = $1; }
         | STRING
             { $$ = std::make_shared<ast::string_expr>($1); }
         | NUMBER
@@ -136,8 +137,6 @@ expr    : funcall_inner
         | qualified_id
             { $$ = $1; }
         | range
-            { $$ = $1; }
-        | dimension
             { $$ = $1; }
         ;
 
@@ -183,11 +182,6 @@ args_list
             { ($$ = $2)->push_front($1); }
         | %empty
             { $$ = std::make_shared<ast::args_list>(); }
-        ;
-
-dimension
-        : NUMBER DIM_SEP NUMBER
-            { $$ = std::make_shared<ast::dimension>($1, $3); }
         ;
 
 qualified_id
