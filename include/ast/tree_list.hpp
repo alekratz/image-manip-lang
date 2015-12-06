@@ -23,6 +23,7 @@ public:
         { members.insert(members.begin(), ptr); }
     auto begin() { return members.begin(); }
     auto end() { return members.end(); }
+    auto size() { return members.size(); }
     void merge(const tree_list<contained_t>& other)
     {
         auto& them = other.members;

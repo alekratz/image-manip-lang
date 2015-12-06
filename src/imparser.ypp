@@ -192,22 +192,28 @@ dimension
 
 qualified_id
         : IDENTIFIER qualified_id_tail 
-            { $$ = std::make_shared<ast::qualified_id>($1, $2); }
+            { 
+                $$ = $2;
+                $$->members.insert($$->members.begin(), $1);
+            }
         ;
 
 qualified_id_tail
         : DOT IDENTIFIER qualified_id_tail 
-            { $$ = std::make_shared<ast::qualified_id>($2, $3); }
+            {
+                $$ = $3;
+                $$->members.insert($$->members.begin(), $2);
+            }
         | DOT NUMBER 
             {
                 std::stringstream ss;
                 ss << $2;
-                $$ = std::make_shared<ast::qualified_id>(ss.str(), nullptr);
+                $$ = std::make_shared<ast::qualified_id>(ss.str());
             }
         | DOT STAR 
-            { $$ = std::make_shared<ast::qualified_id>("*", nullptr); }
+            { $$ = std::make_shared<ast::qualified_id>("*"); }
         | %empty 
-            { $$ = nullptr; }
+            { $$ = std::make_shared<ast::qualified_id>(); }
         ;
 
 range   : NUMBER DOUBLEDOT NUMBER
